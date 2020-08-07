@@ -16,7 +16,7 @@ This dataset contains six columns:
  4. **'Flag'**: If there is no query, then its value is no_query.
  5. **'User'**: the user that tweeted who wrote the tweet.
  6. **'Tweet'** or **'text'**: the text of the tweet.
-The columns **'Id'** , **'Flag'** , and **'User'** wont be beneficial for the purpose of this classification. Thease columns are not be considered as features and get deleted during preprocessing step. However, the  usernames, urls, punctuation marks, extra dots, can provide the sense of relative sentiments.
+Thease columns cannot not be considered as features. To train the NN model, we will use the wordembedding vectors as features of each tweet. For this aim, we used 
 
 ## Code Instruction
-This application has been implemented in 4 steps. In the First step the raw dataset's statistics and schema get visualized, in the following next two steps the data gets cleaned and preprocessed. In the last step **LSTM** model gets trained based on the traing dataset. The efficiency of the model will furthur get tested based on model's accuracy of classification of test data
+This application has been implemented in 5 steps. In the First step the raw dataset's statistics and schema get visualized, in the following next two steps the data gets cleaned and preprocessed. After the tweets are cleaned and stopwords are removed, we train a word embedding model to extract meanigful features. Thease word embeddings then will be feed into the neural network for model training. In the last step keras model gets trained based on the word embedding matrix. The efficiency of the model will furthur get tested based on model's accuracy of classification of test data.
