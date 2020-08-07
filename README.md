@@ -20,3 +20,7 @@ Thease columns cannot not be considered as features. To train the NN model, we w
 
 ## Code Instruction
 This application has been implemented in 5 steps. In the First step the raw dataset's statistics and schema get visualized, in the following next two steps the data gets cleaned and preprocessed. After the tweets are cleaned and stopwords are removed, we train a word embedding model to extract meanigful features. Thease word embeddings then will be feed into the neural network for model training. In the last step keras model gets trained based on the word embedding matrix. The efficiency of the model will furthur get tested based on model's accuracy of classification of test data.
+
+1. https://www.kaggle.com/mahtabtamannaee/sentiment-analysis-lstm/edit
+2. https://www.kaggle.com/imvkhandelwal/tensorflow-2-0-rnn-with-glove-vectors
+3. https://www.kaggle.com/paoloripamonti/twitter-sentiment-analysis/notebook
