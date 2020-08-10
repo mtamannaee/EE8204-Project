@@ -30,7 +30,7 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
   
 * Considering the first column as the output of RNN, the mapping of first column's values are mapped (0 -> negative, 2 -> Neutral, 4 -> positive) as classes. The lable distribution of dataset is shown bellow.
 
-    <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Dataset%20Lable%20Dist.PNG" width="600">
+    <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Dataset%20Lable%20Dist.PNG" width="550">
  
 * Thease columns cannot not be considered as features.To construct a robust model, meaningfull features should represent each query word as the element of an input sequence. Therefore, a **Language Model** wa built to provide a proper representation of a word that can contain contextual meaning with respect to its text. The word embedding vectors can be used as features, in that case each tweet terms' embedding vector coveyes the context of that term in a tweet. 
 
@@ -48,7 +48,10 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 ## Model Evaluation :
 
 * In the first step of evaluation, Learning Curve of loss and accuracy of the model on each epoch has been graphed.
+  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Accuracy%20Loss.png" width="550">
+
 * Next we can take a look at a Confusion Matric of the models classification.
+  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Accuracy%20Loss.png" width="550">
 
 ## Model's Classification Results :
 
@@ -56,8 +59,8 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 
 
 ## Code Instruction
-This application has been implemented in 5 steps. In the First step the raw dataset's statistics and schema get visualized, in the following next two steps the data gets cleaned and preprocessed. After the tweets are cleaned and stopwords are removed, we train a word embedding model to extract meanigful features. Thease word embeddings then will be feed into the neural network for model training. In the last step keras model gets trained based on the word embedding matrix. The efficiency of the model will furthur get tested based on model's accuracy of classification of test data.
+1. Download code given in code directory
+2. Download the dataset save it in ./data/ directory
+3. Install or update all the python libraries.
+4. Make sure you are useing Python3.6.x 
 
-1. https://www.kaggle.com/mahtabtamannaee/sentiment-analysis-lstm/edit
-2. https://www.kaggle.com/imvkhandelwal/tensorflow-2-0-rnn-with-glove-vectors
-3. https://www.kaggle.com/paoloripamonti/twitter-sentiment-analysis/notebook
