@@ -126,11 +126,10 @@ y_test = y_test.reshape(-1,1)
 print("y_train",y_train.shape)
 print("y_test",y_test.shape)
 
-print("x_train", x_train.shape)
-print("y_train", y_train.shape)
-print()
-print("x_test", x_test.shape)
-print("y_test", y_test.shape)
+print("x_train", x_train.shape) # x_train (1280000, 300)
+print("y_train", y_train.shape) # y_train (1280000, 1)
+print("x_test", x_test.shape)   # x_test (320000, 300)
+print("y_test", y_test.shape)   # y_test (320000, 1)
 
 # word2vec Matrix for Embedding layer  -----------------------------------------------------------
 print("W2V_VEC_SIZE : ",W2V_VEC_SIZE)
