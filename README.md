@@ -57,10 +57,10 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 
 * The Precision, recall, and f1-score have been calculated and summerized in this table.
 
-      |precision|recall| f1-score|support
-    -|---------|--------|--------|------
-    Negative|0.78|0.76|0.77|160539
-    Positive|0.77|0.77|0.77|159461
+    -|precision|recall| f1-score|support|
+    -|---------|--------|--------|------|
+    Negative|0.78|0.76|0.77|160539|
+    Positive|0.77|0.77|0.77|159461|
     Accuracy|-|-|0.77|320000|
     macro avg |0.77|0.77|320000|
     weighted avg|0.77|0.77|320000|
