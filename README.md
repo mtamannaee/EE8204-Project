@@ -48,10 +48,10 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 ## Model Evaluation :
 
 * In the first step of evaluation, Learning Curve of loss and accuracy of the model on each epoch has been graphed.
-  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Accuracy%20Loss.png" width="550">
+  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Accuracy%20Loss.png" width="500">
 
 * Next we can take a look at a Confusion Matric of the models classification.
-  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Accuracy%20Loss.png" width="550">
+  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/CMat.png" width="500">
 
 ## Model's Classification Results :
 
