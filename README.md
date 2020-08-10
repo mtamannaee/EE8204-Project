@@ -14,6 +14,7 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 
 ### Dataset Schema
 * This dataset contains six columns:
+
     Row|Sentiment|Id| Date| Flag | User | text |
     -|---------|---|----|------|------|------|
     0|0|1467810369|Mon Apr 06 22:19:45 PDT 2009|NO_QUERY|`_TheSpecialOne_` |@switchfoot http://twitpic.com/2y1zl - Awww, t...|
@@ -26,7 +27,9 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
   4. **'Flag'**: If there is no query, then its value is no_query.
   5. **'User'**: the user that tweeted who wrote the tweet.
   6. **'Tweet'** or **'text'**: the text of the tweet.
+  
 * Considering the first column as the output of RNN, the mapping of first column's values are mapped (0 -> negative, 2 -> Neutral, 4 -> positive) as classes. The lable distribution of dataset is shown bellow.
+
             <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Dataset%20Lable%20Dist.PNG" width="600">
  
 * Thease columns cannot not be considered as features. To train the NN model, we will use the word embedding vectors as features of each tweet. To construct a robust model, meaningfull features should represent each query word as the element of an input sequence. One of the most powerfull techniques of representing a query words is called word embedding.
