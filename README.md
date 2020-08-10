@@ -15,7 +15,7 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 ### Dataset Schema
 * This dataset contains six columns:
 
-            Row|Sentiment|Id| Date| Flag | User | text |
+           Row|Sentiment|Id| Date| Flag | User | text |
            -|---------|---|----|------|------|------|
            0|0|1467810369|Mon Apr 06 22:19:45 PDT 2009|NO_QUERY|`_TheSpecialOne_` |@switchfoot http://twitpic.com/2y1zl - Awww, t...|
            1|0|1467810672|Mon Apr 06 22:19:49 PDT 2009|NO_QUERY|scotthamilton|`is upset that he can't update his Facebook by ...` |  
