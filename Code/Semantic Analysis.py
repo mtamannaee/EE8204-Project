@@ -51,12 +51,13 @@ plt.figure(figsize=(9,5))
 plt.bar(Sentiment_cnt.keys(), Sentiment_cnt.values())
 plt.title("Corpus Polarity Distribuition")
 
-## data preprocessing
+## data preprocessing -----------------------------------------------------------------------
 stop_words = set(stopwords.words("english"))
 stop_words.remove("not")
 stop_words.remove("no")
 stop_words= list(stop_words)
 stemmer = SnowballStemmer("english")
+SEQUENCE_LENGTH = 300
 
 def fixNot_text(text):
 	fixed_text = []
@@ -82,18 +83,16 @@ def preprocess(text, stem=False):
                 tokens.append(token)
     return " ".join(tokens)
 
-%%time
 dataset.text = dataset.text.apply(lambda x: preprocess(x))
 
-dataset_train, dataset_test = train_test_split(dataset, test_size=1-0.8, random_state=42)
+dataset_train, dataset_test = train_test_split(dataset, test_size=1-0.8, random_state=20)
 print("TRAIN : {} , TEST : {}".format( len(dataset_train), len(dataset_test))
 
 documents = [_text.split() for _text in dataset_train.text] 
-
+      
+## Word2Vec ------------------------------------------------------------------------------------
 w2v_model = gensim.models.word2vec.Word2Vec(size = 300, window = 7, min_count = 10, workers = 8)
-
 w2v_model.build_vocab(documents)
-
 words = w2v_model.wv.vocab.keys()
 vocab_size = len(words)
 print("Vocab size", len(words))
@@ -133,7 +132,7 @@ print()
 print("x_test", x_test.shape)
 print("y_test", y_test.shape)
 
-# word2vec Matrix for Embedding layer 
+# word2vec Matrix for Embedding layer  -----------------------------------------------------------
 print("W2V_VEC_SIZE : ",W2V_VEC_SIZE)
 print("vocab_size : ",vocab_size)
 
@@ -144,8 +143,8 @@ for word, i in tokenizer.word_index.items():
     wv_em_matrix[i] = w2v_model.wv[word]
 print(wv_em_matrix.shape)
 
-SEQUENCE_LENGTH = 300
 
+# Nueral Network Model  ---------------------------------------------------------------------------
 #Embedding layer 
 embedding_layer = Embedding(vocab_size, W2V_VEC_SIZE, weights=[wv_em_matrix], input_length=SEQUENCE_LENGTH, trainable=False)
 
@@ -164,7 +163,7 @@ model.compile(loss='binary_crossentropy', optimizer="adam", metrics=['accuracy']
 callbacks = [ ReduceLROnPlateau(monitor='val_loss', patience=5, cooldown=0),
               EarlyStopping(monitor='val_acc', min_delta=1e-4, patience=5)]
 
-history = model.fit(x_train, y_train,batch_size=BATCH_SIZE,epochs = 15, validation_split=0.1, verbose=1, callbacks=callbacks)
+history = model.fit(x_train, y_train,batch_size=1024, epochs = 10, validation_split=0.1, verbose=1, callbacks=callbacks)
       
 # Evaluate
 score = model.evaluate(x_test, y_test, batch_size=BATCH_SIZE)
@@ -198,48 +197,44 @@ def translate_polarity(score, include_neutral=True):
             label = "NEGATIVE"
         elif score >= SENTIMENT_THRESHOLDS[1]:
             label = "POSITIVE"
-
         return label
     else:
         return "NEGATIVE" if score < 0.5 else "POSITIVE"
 
 def predict(text, include_neutral=True):
-    start_at = time.time()
     x_test = pad_sequences(tokenizer.texts_to_sequences([text]), maxlen=SEQUENCE_LENGTH)
     score = model.predict([x_test])[0] # Predict
     label = translate_polarity(score, include_neutral=include_neutral)  # sentiment extraction
-
-    return {"label": label, "score": float(score),
-       "elapsed_time": time.time()-start_at}
+    return {"label": label, "score": float(score)}
 
 
 y_pred_1d = []
 y_test_1d = list(dataset_test.Sentiment)
-scores = model.predict(x_test, verbose=1, batch_size=8000)
+scores = model.predict(x_test, verbose=1, batch_size=10000)
 y_pred_1d = [translate_polarity(score, include_neutral=False) for score in scores]
 
 def plot_confusion_matrix(cm, classes, title='Confusion Matrix', cmap=plt.cm.Blues):
 
     cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
-    plt.title(title, fontsize=35)
+    plt.title(title, fontsize=20)
     plt.colorbar()
     tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=90, fontsize=20)
-    plt.yticks(tick_marks, classes, fontsize=22)
+    plt.xticks(tick_marks, classes, rotation=90, fontsize=17)
+    plt.yticks(tick_marks, classes, fontsize=17)
 
-    fmt = '.3f'
+    fmt = '.2f'
     thresh = cm.max() / 2.
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
         plt.text(j, i, format(cm[i, j], fmt),
                  horizontalalignment="center",
                  color="white" if cm[i, j] > thresh else "black")
 
-    plt.ylabel('Actual Label', fontsize=20)
-    plt.xlabel('Predicted Target', fontsize=20)
+    plt.ylabel('Actual Label', fontsize=17)
+    plt.xlabel('Predicted Label', fontsize=17)
     
 cnf_matrix = confusion_matrix(y_test_1d, y_pred_1d)
-plt.figure(figsize=(12,12))
+plt.figure(figsize=(10,10))
 plot_confusion_matrix(cnf_matrix, classes=dataset_train.Sentiment.unique(), title="Confusion Matrix")
 plt.show()
 
