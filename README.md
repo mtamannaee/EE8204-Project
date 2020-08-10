@@ -62,8 +62,8 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
     Negative|0.78|0.76|0.77|160539|
     Positive|0.77|0.77|0.77|159461|
     Accuracy|-|-|0.77|320000|
-    macro avg |0.77|0.77|320000|
-    weighted avg|0.77|0.77|320000|
+    macro avg |0.77|0.77|0.77|320000|
+    weighted avg|0.77|0.77|0.77|320000|
 
 
 ## Code Instruction
