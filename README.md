@@ -30,7 +30,7 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
   
 * Considering the first column as the output of RNN, the mapping of first column's values are mapped (0 -> negative, 2 -> Neutral, 4 -> positive) as classes. The lable distribution of dataset is shown bellow.
 
-    <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Dataset%20Lable%20Dist.PNG" width="550">
+    <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Dataset%20Lable%20Dist.PNG" width="500">
  
 * Thease columns cannot not be considered as features.To construct a robust model, meaningfull features should represent each query word as the element of an input sequence. Therefore, a **Language Model** wa built to provide a proper representation of a word that can contain contextual meaning with respect to its text. The word embedding vectors can be used as features, in that case each tweet terms' embedding vector coveyes the context of that term in a tweet. 
 
@@ -48,10 +48,10 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 ## Model Evaluation :
 
 * In the first step of evaluation, Learning Curve of loss and accuracy of the model on each epoch has been graphed.
-  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Accuracy%20Loss.png" width="500">
+  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/Accuracy%20Loss.png" width="450">
 
 * Next we can take a look at a Confusion Matric of the models classification.
-  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/CMat.png" width="500">
+  <img src="https://github.com/mtamannaee/EE8204-Project/blob/master/Figures/CMat.png" width="450">
 
 ## Model's Classification Results :
 
