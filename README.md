@@ -3,7 +3,7 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 
 ## Overview
 * The focus of this work is on  classifying the sentiments' poarity behind short natural language texts like Twitter messages. The subject of this project can be considered as a **Natral Language Processing** or **NLP** classification task. Its already known for NLP tasks, deep learning methods have outperformed all other methods. Also, in any sequential data like a text, the idea of **Reccurent Neural Network** or **RNN** is proved to be usefull as it can model the input as a sequence of data and learn and represent the output as another sequence or numerical value.
-* To model a deep sentiment classifier, the sentiments needs to be mapped from a nuerical scores into negative/positive polarities. The model needs to learn to classify the sentiment behind a natural language query and classify its sentiment polarity as negative or pasitive based on query terms. Consequently, a publicly available dataset has been chosen which satisfies such requirement. 
+* To model a deep sentiment classifier, the sentiments needs to be mapped from a nuerical scores into **negative/positive** polarities. The model needs to learn to classify the sentiment behind a natural language query and classify its sentiment polarity as negative or pasitive based on query terms. Consequently, a publicly available dataset has been chosen which satisfies such requirement. 
 
 * Similar to all NLP tasks, preprocessing has been applied before any other step of training. 
 
@@ -16,13 +16,14 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 * This dataset contains six columns:
   ![Dataset Table](url)
  
-  1.  **'Sentiment'** or **target**: the polarity of the tweet can be mapped based on this column.
+  1. **'Sentiment'** or **target**: the polarity of the tweet can be mapped based on this column.
   2. **'Id'**: The id of the tweet.
   3. **'Date'**: the date of the tweet.
   4. **'Flag'**: If there is no query, then its value is no_query.
   5. **'User'**: the user that tweeted who wrote the tweet.
   6. **'Tweet'** or **'text'**: the text of the tweet.
-* Considering the first column as the output of RNN, the mapping of first column's values are mapped (0 --> negative, 2 --> Neutral, 4 --> positive) as three classes. The lable distribution of dataset is shown bellow.
+* Considering the first column as the output of RNN, the mapping of first column's values are mapped (0 -> negative, 2 -> Neutral, 4 -> positive) as classes. The lable distribution of dataset is shown bellow.
+
  ![Dataset Lable Dist](url)
  
 * Thease columns cannot not be considered as features. To train the NN model, we will use the word embedding vectors as features of each tweet. To construct a robust model, meaningfull features should represent each query word as the element of an input sequence. One of the most powerfull techniques of representing a query words is called word embedding.
