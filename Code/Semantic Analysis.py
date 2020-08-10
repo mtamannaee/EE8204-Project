@@ -43,7 +43,6 @@ polarity_score = {0: "NEGATIVE", 2: "NEUTRAL", 4: "POSITIVE"}
 def translate_polarity(label):
     return polarity_score[int(label)]
 
-%%time
 dataset.Sentiment = dataset.Sentiment.apply(lambda x: translate_polarity(x))
 
 Sentiment_cnt = Counter(dataset.Sentiment)
@@ -58,7 +57,6 @@ stop_words.remove("not")
 stop_words.remove("no")
 stop_words= list(stop_words)
 stemmer = SnowballStemmer("english")
-
 
 def fixNot_text(text):
 	fixed_text = []
@@ -90,7 +88,6 @@ dataset.text = dataset.text.apply(lambda x: preprocess(x))
 dataset_train, dataset_test = train_test_split(dataset, test_size=1-0.8, random_state=42)
 print("TRAIN : {} , TEST : {}".format( len(dataset_train), len(dataset_test))
 
-%%time
 documents = [_text.split() for _text in dataset_train.text] 
 
 w2v_model = gensim.models.word2vec.Word2Vec(size = 300, window = 7, min_count = 10, workers = 8)
@@ -101,10 +98,8 @@ words = w2v_model.wv.vocab.keys()
 vocab_size = len(words)
 print("Vocab size", len(words))
 
-%%time
 w2v_model.train(documents, total_examples=len(documents), epochs= 32)
-
-%%time
+      
 tokenizer = Tokenizer()
 tokenizer.fit_on_texts(dataset_train.text)
 
@@ -112,9 +107,6 @@ vocab_size = len(tokenizer.word_index) + 1
 print("Total words count : ", vocab_size)
 
 
-
-
-%%time
 x_train = pad_sequences(tokenizer.texts_to_sequences(dataset_train.text), maxlen=SEQUENCE_LENGTH)
 x_test = pad_sequences(tokenizer.texts_to_sequences(dataset_test.text), maxlen=SEQUENCE_LENGTH)
 
@@ -172,10 +164,9 @@ model.compile(loss='binary_crossentropy', optimizer="adam", metrics=['accuracy']
 callbacks = [ ReduceLROnPlateau(monitor='val_loss', patience=5, cooldown=0),
               EarlyStopping(monitor='val_acc', min_delta=1e-4, patience=5)]
 
-%%time
 history = model.fit(x_train, y_train,batch_size=BATCH_SIZE,epochs = 15, validation_split=0.1, verbose=1, callbacks=callbacks)
+      
 # Evaluate
-
 score = model.evaluate(x_test, y_test, batch_size=BATCH_SIZE)
 print("Accuracy:",score[1])
 print("Loss:",score[0])
@@ -184,7 +175,6 @@ acc = history.history['acc']
 val_acc = history.history['val_acc']
 loss = history.history['loss']
 val_loss = history.history['val_loss']
- 
 epochs = range(len(acc))
  
 plt.plot(epochs, acc, 'b', label='Training acc')
@@ -223,7 +213,6 @@ def predict(text, include_neutral=True):
        "elapsed_time": time.time()-start_at}
 
 
-%%time
 y_pred_1d = []
 y_test_1d = list(dataset_test.Sentiment)
 scores = model.predict(x_test, verbose=1, batch_size=8000)
@@ -249,13 +238,11 @@ def plot_confusion_matrix(cm, classes, title='Confusion Matrix', cmap=plt.cm.Blu
     plt.ylabel('Actual Label', fontsize=20)
     plt.xlabel('Predicted Target', fontsize=20)
     
-%%time
 cnf_matrix = confusion_matrix(y_test_1d, y_pred_1d)
 plt.figure(figsize=(12,12))
 plot_confusion_matrix(cnf_matrix, classes=dataset_train.Sentiment.unique(), title="Confusion Matrix")
 plt.show()
 
 print(classification_report(y_test_1d, y_pred_1d))   # Classification Final Results
-
 accuracy_score(y_test_1d, y_pred_1d)   # Accuracy 
 
