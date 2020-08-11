@@ -52,6 +52,7 @@ plt.bar(Sentiment_cnt.keys(), Sentiment_cnt.values())
 plt.title("Corpus Polarity Distribuition")
 
 ## data preprocessing -----------------------------------------------------------------------
+
 stop_words = set(stopwords.words("english"))
 stop_words.remove("not")
 stop_words.remove("no")
@@ -91,7 +92,7 @@ print("TRAIN : {} , TEST : {}".format( len(dataset_train), len(dataset_test))
 documents = [_text.split() for _text in dataset_train.text] 
       
 ## Word2Vec ------------------------------------------------------------------------------------
-w2v_model = gensim.models.word2vec.Word2Vec(size = 300, window = 7, min_count = 10, workers = 8)
+w2v_model = gensim.models.word2vec.Word2Vec(size = 300, window = 10, min_count = 10, workers = 8)
 w2v_model.build_vocab(documents)
 words = w2v_model.wv.vocab.keys()
 vocab_size = len(words)
@@ -105,9 +106,8 @@ tokenizer.fit_on_texts(dataset_train.text)
 vocab_size = len(tokenizer.word_index) + 1
 print("Total words count : ", vocab_size)
 
-
-x_train = pad_sequences(tokenizer.texts_to_sequences(dataset_train.text), maxlen=SEQUENCE_LENGTH)
-x_test = pad_sequences(tokenizer.texts_to_sequences(dataset_test.text), maxlen=SEQUENCE_LENGTH)
+x_train = pad_sequences(tokenizer.texts_to_sequences(dataset_train.text), maxlen = 300)
+x_test = pad_sequences(tokenizer.texts_to_sequences(dataset_test.text), maxlen = 300)
 
 #labels : sentiment polarity
 labels = dataset_train.Sentiment.unique().tolist()
@@ -131,7 +131,8 @@ print("y_train", y_train.shape) # y_train (1280000, 1)
 print("x_test", x_test.shape)   # x_test (320000, 300)
 print("y_test", y_test.shape)   # y_test (320000, 1)
 
-# word2vec Matrix for Embedding layer  -----------------------------------------------------------
+# word2vec Matrix for Embedding layer  -----------------------------------------------------------------
+W2V_VEC_SIZE = 300    
 print("W2V_VEC_SIZE : ",W2V_VEC_SIZE)
 print("vocab_size : ",vocab_size)
 
@@ -145,7 +146,7 @@ print(wv_em_matrix.shape)
 
 # Nueral Network Model  ---------------------------------------------------------------------------
 #Embedding layer 
-embedding_layer = Embedding(vocab_size, W2V_VEC_SIZE, weights=[wv_em_matrix], input_length=SEQUENCE_LENGTH, trainable=False)
+embedding_layer = Embedding(vocab_size, W2V_VEC_SIZE, weights=[wv_em_matrix], input_length= 300, trainable=False)
 
 # LSTM Model
 model = Sequential()
@@ -156,7 +157,6 @@ model.add(Dense(1, activation='sigmoid'))
 model.summary()
 
 
-BATCH_SIZE = 1024
 model.compile(loss='binary_crossentropy', optimizer="adam", metrics=['accuracy'])
 
 callbacks = [ ReduceLROnPlateau(monitor='val_loss', patience=5, cooldown=0),
@@ -164,8 +164,7 @@ callbacks = [ ReduceLROnPlateau(monitor='val_loss', patience=5, cooldown=0),
 
 history = model.fit(x_train, y_train,batch_size=1024, epochs = 10, validation_split=0.1, verbose=1, callbacks=callbacks)
       
-# Evaluate
-score = model.evaluate(x_test, y_test, batch_size=BATCH_SIZE)
+score = model.evaluate(x_test, y_test, batch_size = 1024)
 print("Accuracy:",score[1])
 print("Loss:",score[0])
 
@@ -209,7 +208,7 @@ def predict(text, include_neutral=True):
 
 y_pred_1d = []
 y_test_1d = list(dataset_test.Sentiment)
-scores = model.predict(x_test, verbose=1, batch_size=10000)
+scores = model.predict(x_test, verbose=1, batch_size = 8000)
 y_pred_1d = [translate_polarity(score, include_neutral=False) for score in scores]
 
 def plot_confusion_matrix(cm, classes, title='Confusion Matrix', cmap=plt.cm.Blues):
