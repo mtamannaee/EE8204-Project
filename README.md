@@ -9,7 +9,7 @@ Twitter Sentiment Analysis with Deep Neural Network LSTM
 
 ## Dataset
 * The dataset that has been used for this project is **sentiment140** dataset. It contains **1,600,000 tweets** extracted using the Twitter API. This dataset is publicly available at  [Kaggle Link](https://www.kaggle.com/kazanova/sentiment140).
-* Four types of sentiments has been assigned to these tweets in terms of zero to four score numbers. Based on such score assignment, **score = 0** indicates the most negative polarity score, and the **score = 4** indicates the most positive polarity score. These scores can help us as golden truth to perform sentiment classification on Natural Language texts like tweets. 
+* Four types of scores has been assigned to these tweets in terms of zero to four score numbers. Based on such score assignment, **score = 0** indicates the most negative polarity score, and the **score = 4** indicates the most positive polarity score. These scores can help us as golden truth to perform sentiment classification on Natural Language texts like tweets. 
 
 
 ## Dataset Schema
